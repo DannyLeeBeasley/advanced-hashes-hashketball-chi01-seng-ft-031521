@@ -1,4 +1,4 @@
-# Write your code below game_hash
+require 'pry'
 def game_hash
   {
     home: {
@@ -126,4 +126,70 @@ def game_hash
   }
 end
 
-# Write code here
+def all_players
+  game_hash[:home][:players].concat(game_hash[:away][:players])
+end
+
+
+def num_points_scored(name)
+  all_players.each do |player_hash| 
+    if player_hash[:player_name] == name 
+    return player_hash[:points]
+    end
+  end
+end
+
+def shoe_size(name)
+  all_players.each do |player_hash| 
+    if player_hash[:player_name] == name 
+    return player_hash[:shoe]
+    end
+  end
+end
+
+def team_colors(team_name)
+  if team_name == "Brooklyn Nets"
+    return game_hash[:home][:colors]
+  else return game_hash[:away][:colors]
+  end
+end
+
+def team_names
+  array_of_team_names = []
+  array_of_team_names << game_hash[:home][:team_name]
+  array_of_team_names << game_hash[:away][:team_name]
+  array_of_team_names
+end
+
+def player_numbers(team_name)
+  all_teams_numbers = []
+  game_hash.each{ |key, value|
+    if value[:team_name] == team_name
+      value[:players].each{ |element| 
+         all_teams_numbers.push(element[:number])
+        }
+      end
+  }
+  return all_teams_numbers
+end
+
+def player_stats(player_name)
+ all_players.each do |player_hash| 
+    if player_hash[:player_name] == player_name 
+    return player_hash
+    end
+  end
+end
+
+
+def big_shoe_rebounds
+  mr_big = nil
+  rebounds = nil
+  all_players.each do |player_hash|
+    if mr_big == nil || mr_big <= player_hash[:shoe]
+      mr_big = player_hash[:shoe]
+      rebounds = player_hash[:rebounds]
+    end
+  end
+  return rebounds
+end
